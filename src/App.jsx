@@ -1,4 +1,4 @@
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Nav, PrivateRoute } from '_components';
 import { history } from '_helpers';
@@ -13,11 +13,13 @@ function App() {
             <Router history={history}>
                 <Nav />
                 <div className="container pt-4 pb-4">
-                    <PrivateRoute exact path="/" component={Home} />
-                    <Route path="/login" component={Login} />
+                    <Switch>
+                        <PrivateRoute exact path="/" component={Home} />
+                        <Route path="/login" component={Login} />
+                        <Redirect from="*" to="/" />
+                    </Switch>
                 </div>
             </Router>
         </div>
     );
 }
-
