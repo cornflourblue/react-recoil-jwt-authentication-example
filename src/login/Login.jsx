@@ -1,13 +1,24 @@
+import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { useRecoilValue } from 'recoil';
 
+import { authAtom } from '_state';
 import { useUserActions } from '_actions';
 
 export { Login };
 
-function Login() {
+function Login({ history }) {
+    const auth = useRecoilValue(authAtom);
     const userActions = useUserActions();
+
+    useEffect(() => {
+        // redirect to home if already logged in
+        if (auth) history.push('/');
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // form validation rules 
     const validationSchema = Yup.object().shape({
